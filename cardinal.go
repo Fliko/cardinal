@@ -5,7 +5,6 @@
 // 	1. To reject a promise return a non-nil error
 //
 // 	2. Nil errors will not be piped into the next chained function
-
 package cardinal
 
 import (
@@ -68,7 +67,7 @@ func (p PromiseStruct) runFunc(fn interface{}) PromiseStruct {
 
 	// Create return structure
 	resolveStatus := fulfilled
-	values := make([]reflect.Value, 0)
+	var values []reflect.Value
 
 	// Add each return value to the reflect Value slice or return just the error
 	for i := 0; i < fnTyp.NumOut(); i++ {

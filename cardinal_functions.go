@@ -77,7 +77,7 @@ func (p PromiseStruct) All(fn ...interface{}) PromiseStruct {
 		}
 	}
 
-	flattendResults := make([]reflect.Value, 0)
+	var flattendResults []reflect.Value
 	for _, res := range results {
 		flattendResults = append(flattendResults, res...)
 	}
@@ -132,7 +132,7 @@ func (p PromiseStruct) Map(s interface{}, fn interface{}) PromiseStruct {
 		}
 	}
 
-	flattendResults := make([]reflect.Value, 0)
+	var flattendResults []reflect.Value
 	for _, res := range results {
 		flattendResults = append(flattendResults, res...)
 	}
