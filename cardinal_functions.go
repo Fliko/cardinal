@@ -1,10 +1,3 @@
-// Package cardinal is a Promise library written in Go using the reflect package.
-//
-// Before getting started there a few basic rules you need to understand:
-//
-// 	1. To reject a promise return a non-nil error
-//
-// 	2. Nil errors will not be piped into the next chained function
 package cardinal
 
 import (
