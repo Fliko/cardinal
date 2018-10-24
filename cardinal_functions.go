@@ -57,22 +57,22 @@ func (p PromiseStruct) All(fn ...interface{}) PromiseStruct {
 
 	allStatuses := fulfilled
 	results := make([][]reflect.Value, i, i)
+	var flattendResults []reflect.Value
 
 	for j := 0; j < i; j++ {
 		resolution := <-done
-		if resolution.Status == rejected && allStatuses == rejected {
-			results[resolution.Order] = resolution.Result
-		} else if resolution.Status == rejected {
+		if resolution.Status == rejected && allStatuses == fulfilled {
 			allStatuses = rejected
-			results[resolution.Order] = resolution.Result
+			flattendResults = resolution.Result
 		} else if resolution.Status != rejected && allStatuses == fulfilled {
 			results[resolution.Order] = resolution.Result
 		}
 	}
 
-	var flattendResults []reflect.Value
-	for _, res := range results {
-		flattendResults = append(flattendResults, res...)
+	if allStatuses == fulfilled {
+		for _, res := range results {
+			flattendResults = append(flattendResults, res...)
+		}
 	}
 
 	return PromiseStruct{
@@ -112,22 +112,22 @@ func (p PromiseStruct) Map(s interface{}, fn interface{}) PromiseStruct {
 
 	allStatuses := fulfilled
 	results := make([][]reflect.Value, i, i)
+	var flattendResults []reflect.Value
 
 	for j := 0; j < i; j++ {
 		resolution := <-done
-		if resolution.Status == rejected && allStatuses == rejected {
-			results[resolution.Order] = resolution.Result
-		} else if resolution.Status == rejected {
+		if resolution.Status == rejected && allStatuses == fulfilled {
 			allStatuses = rejected
-			results[resolution.Order] = resolution.Result
+			flattendResults = resolution.Result
 		} else if resolution.Status != rejected && allStatuses == fulfilled {
 			results[resolution.Order] = resolution.Result
 		}
 	}
 
-	var flattendResults []reflect.Value
-	for _, res := range results {
-		flattendResults = append(flattendResults, res...)
+	if allStatuses == fulfilled {
+		for _, res := range results {
+			flattendResults = append(flattendResults, res...)
+		}
 	}
 
 	return PromiseStruct{
